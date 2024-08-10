@@ -1,0 +1,12 @@
+setuptools
+ttkbootstrap
+pillow
+qrcode
+deep_translator
+deep_translator[ai]
+deep_translator[docx]
+deep_translator[pdf]
+regex
+argostranslate
+
+# take attention pip can not install `xxx_sent_ud_sm` model，download link: https://spacy.io/models/xx#xx_sent_ud_sm
