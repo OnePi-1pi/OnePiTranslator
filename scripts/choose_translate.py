@@ -21,7 +21,6 @@ os.environ["ARGOS_DEVICE_TYPE"] = "auto"
 def loadModel():
     global argotransmodel
     from argostranslate.translate import translate as argotransmodel
-    print('offlinetranslator loaded')
 argodict ={'chinese (simplified)': 'zh', 'chinese (traditional)': 'zt', 'english': 'en', 'french': 'fr', 'spanish': 'es', 'german': 'de', 'korean': 'ko', 'japanese': 'ja', 'russian': 'ru'}
 googledict={'auto': 'auto', 'chinese (simplified)': 'zh-CN', 'chinese (traditional)': 'zh-TW', 'english': 'en', 'arabic': 'ar', 'french': 'fr', 'spanish': 'es', 'portuguese': 'pt', 'german': 'de', 'korean': 'ko', 'italian': 'it', 'japanese': 'ja', 'russian': 'ru', 'vietnamese': 'vi', 'polish': 'pl', 'hindi': 'hi', 'turkish': 'tr', 'thai': 'th', 'swedish': 'sv', 'dutch': 'nl', 'czech': 'cs', 'greek': 'el', 'hebrew': 'iw', 'danish': 'da', 'finnish': 'fi', 'hungarian': 'hu', 'romanian': 'ro', 'slovak': 'sk', 'serbian': 'sr', 'bulgarian': 'bg', 'croatian': 'hr', 'lithuanian': 'lt', 'latvian': 'lv', 'estonian': 'et', 'slovenian': 'sl', 'maltese': 'mt', 'catalan': 'ca', 'galician': 'gl', 'basque': 'eu', 'albanian': 'sq', 'malayalam': 'ml', 'tamil': 'ta', 'telugu': 'te', 'kannada': 'kn', 'marathi': 'mr', 'sinhala': 'si', 'khmer': 'km', 'myanmar': 'my', 'lao': 'lo', 'nepali': 'ne', 'amharic': 'am', 'javanese': 'jw', 'sundanese': 'su', 'welsh': 'cy', 'swahili': 'sw', 'xhosa': 'xh', 'zulu': 'zu', 'yoruba': 'yo', 'igbo': 'ig', 'hausa': 'ha', 'pashto': 'ps', 'punjabi': 'pa', 'gujarati': 'gu', 'odia (oriya)': 'or', 'turkmen': 'tk', 'uyghur': 'ug', 'uzbek': 'uz', 'tatar': 'tt', 'tajik': 'tg', 'afrikaans': 'af', 'irish': 'ga', 'yiddish': 'yi', 'armenian': 'hy', 'assamese': 'as', 'aymara': 'ay', 'azerbaijani': 'az', 'bambara': 'bm', 'belarusian': 'be', 'bengali': 'bn', 'bhojpuri': 'bho', 'bosnian': 'bs', 'cebuano': 'ceb', 'chichewa': 'ny', 'corsican': 'co', 'dhivehi': 'dv', 'dogri': 'doi', 'esperanto': 'eo', 'ewe': 'ee', 'filipino': 'tl', 'frisian': 'fy', 'georgian': 'ka', 'guarani': 'gn', 'haitian creole': 'ht', 'hawaiian': 'haw', 'hmong': 'hmn', 'icelandic': 'is', 'ilocano': 'ilo', 'indonesian': 'id', 'kazakh': 'kk', 'kinyarwanda': 'rw', 'konkani': 'gom', 'krio': 'kri', 'kurdish (kurmanji)': 'ku', 'kurdish (sorani)': 'ckb', 'kyrgyz': 'ky', 'latin': 'la', 'lingala': 'ln', 'luganda': 'lg', 'luxembourgish': 'lb', 'macedonian': 'mk', 'maithili': 'mai', 'malagasy': 'mg', 'malay': 'ms', 'maori': 'mi', 'meiteilon (manipuri)': 'mni-Mtei', 'mizo': 'lus', 'mongolian': 'mn', 'norwegian': 'no', 'oromo': 'om', 'persian': 'fa', 'quechua': 'qu', 'samoan': 'sm', 'sanskrit': 'sa', 'scots gaelic': 'gd', 'sepedi': 'nso', 'sesotho': 'st', 'shona': 'sn', 'sindhi': 'sd', 'somali': 'so', 'tigrinya': 'ti', 'tsonga': 'ts', 'twi': 'ak', 'ukrainian': 'uk', 'urdu': 'ur'}
 libredict ={'auto': 'auto', 'chinese (simplified)': 'zh', 'chinese (traditional)': 'zh', 'english': 'en', 'arabic': 'ar', 'french': 'fr', 'spanish': 'es', 'portuguese': 'pt', 'german': 'de', 'korean': 'ko', 'italian': 'it', 'japanese': 'ja', 'russian': 'ru', 'vietnamese': 'vi', 'polish': 'pl', 'hindi': 'hi', 'turkish': 'tr', 'irish': 'ga', 'indonesian': 'id'}
@@ -40,7 +39,7 @@ t1 = time.time()
 try_num = 1
 #将正则表达式的样式编译为一个 正则表达式对象 pr
 pr=re.compile(r'[^\p{L}\p{N}\p{M}\n]')
-result = None
+
 
 
 
@@ -57,7 +56,7 @@ def wait_time(x):
 def run_target(pipe,func, arg):
     try:
         result = func(arg)
-        pipe.send(result) 
+        pipe.send(result)
     except BaseException as e:
         pipe.send(e)
     pipe.close()
@@ -70,20 +69,15 @@ def run_with_timeout(func, arg):
     p = Process(target=run_target, args=(child_conn,func, arg))
     time1 = time.time()
     wtime=wait_time(len(arg))
-    #print('预设等待时间',wtime)
     p.start()
     time2 = time.time()
     child_pid =p.pid
-    #print(child_pid,'进程启动时间',time2-time1)
     p.join(wtime)
     time3 = time.time()
-    #print('等待进程时间',time3-time2)
     # 如果子进程超时,尝试终止,不成功则终止父进程
     if p.is_alive():
-        #print('超时')
         time4 = time.time()
         os.kill(child_pid, signal.SIGTERM)
-        #print('结束进程时间',time4-time3)
         raise TimeoutError('网络超时')
     result = parent_conn.recv()
     return result
@@ -94,9 +88,11 @@ def s2l(slist_or_str,split_len = 0):
     if isinstance(slist_or_str,str):
         #是字符串则转为小写替换下划线后原样输出
         ss=re.sub('_',' ',slist_or_str.lower())
+        ss = ss.strip()
     else:
         #不是字符串则替换符号为空格并将每个元素加换行符形成字符串存为ss
         ss=pr.sub(' ','\n'.join(slist_or_str).lower())
+        ss = re.sub('\n',';\n',ss).strip()
     #如果指定了分割长度
     if split_len != 0 :
         #则使用指定分割
@@ -105,22 +101,10 @@ def s2l(slist_or_str,split_len = 0):
         #使用默认分割
         split_num = corenum
         split_len = 200
-    #print('原文本长度',len(ss),'段落数',ss.count('\n'),'分割数',split_num)
     if len(ss) >= split_len :
-        #print(f'{len(ss)=}')
         #判断符号数量是否足够分割
-        for split_str in ['\n',
-                        ';' ,
-                        '.' , 
-                        '。',
-                        ' ' ,
-                        ',' ,
-                        '，',
-                        "'" ,
-                        '"' ,
-                        '']:
+        for split_str in ['\n',';' ,'.' , '。',' ' ,',' ,'，',"'" ,'"' ,'_','-','']:
             if ss.count(split_str) >= split_num:
-                #print(f'{split_str=}')
                 break
         #如果足够，即split_str数量>=分割数
         if split_str != '':
@@ -148,7 +132,6 @@ def s2l(slist_or_str,split_len = 0):
 def OfflineTranslantor(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
     # 参数:slist_or_str: 待翻译的字符串或字符串列表.slg: 源语言代码,'auto'表示自动识别.tlg: 目标语言代码.key: 翻译引擎的API密钥.sleep_time: 调用翻译API之间的间隔时间,用于防止请求过于频繁.singaltrans: 布尔值,指示是否对每个单独的文件名进行翻译.返回:翻译后的字符串或字符串列表.
     # 打印调试信息
-    print('长度',len(slist_or_str),slist_or_str[:20], slg, tlg, key, sleep_time, singaltrans)
     slg=argodict[slg]
     tlg=argodict[tlg]
     translate_text_partial = partial(argotransmodel, from_code=slg, to_code=tlg)
@@ -158,30 +141,26 @@ def OfflineTranslantor(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
             ss_or_sl = pr.sub(' ',slist_or_str.lower())
         else:
             ss_or_sl = pr.sub(' ' , '\n'.join(slist_or_str).lower())
-        ss_or_sl = ss_or_sl.split('\n')
+            ss_or_sl = ss_or_sl.strip()
+        ss_or_sl = ss_or_sl.splitlines()
         split_str ='\n'
     else:
         ss_or_sl,split_str = s2l(slist_or_str)
     t2 = time.time()
     if isinstance(ss_or_sl,str):
-        #print(slist_or_str[:20], slg, tlg)
         tlist_or_str = argotransmodel(ss_or_sl,from_code=slg, to_code=tlg)
         tlist_or_str = pr.sub(' ', tlist_or_str)
     else:
-        #print('分割数量',len(ss_or_sl))
-        # #print(ss_or_sl)
         with ProcessPoolExecutor(max_workers=corenum) as executor:
             tlist_or_str = executor.map(translate_text_partial,ss_or_sl)
         tlist_or_str = split_str.join(list(tlist_or_str))
-        #print(tlist_or_str)
     if isinstance(slist_or_str,str):
-        #print('进来时是字符串')
+        #进来时是字符串
         o_o=' '
     else:
-        #print('进来时是列表')
+        #进来时是列表
         o_o='_'
     tlist_or_str = pr.sub(o_o , tlist_or_str)
-    #print(f'翻译所用时间{(time.time()-t2):2f}秒')
     return tlist_or_str
 
 #写没有key与source时的情况，直接从deep-translator对应父类代码里扒的。
@@ -227,7 +206,6 @@ class micnosourcetr(dt.MicrosoftTranslator):
 
             valid_microsoft_json = [{"text": text}]
             try:
-                #print(self.headers,self._url_params)
                 response = requests.post(
                     self._base_url,
                     params=self._url_params,
@@ -252,16 +230,13 @@ class micnosourcetr(dt.MicrosoftTranslator):
 
 def translate_file(func, path,newpath):
     try:
-        #print('文档翻译',func, path,newpath)
         trans_text = func(path)
         if trans_text:
-            # #print(f'{trans_text=}')
             with open(newpath, 'w',encoding='utf_8') as f:
                 f.write(trans_text)
     except Exception as e:
         with open(Path(__file__).parent /'error.er', 'w',encoding='utf_8') as f:
             f.write(str(e))
-        # #print('出错',e)     
     return
 
 
@@ -280,7 +255,6 @@ def DoTranslate(funt,split_len,slist_or_str, sleep_time, singaltrans,argdict):
         p.start()
         child_pid =p.pid
         return newpath,child_pid
-        #print('路径文件')
     #文件和文件名翻译
     t2 = time.time()
     tlist_or_str = None
@@ -288,18 +262,14 @@ def DoTranslate(funt,split_len,slist_or_str, sleep_time, singaltrans,argdict):
         if isinstance(slist_or_str,str):
             ss_or_sl = slist_or_str.lower()
         else:
-            ss_or_sl = pr.sub(' ' , '\n'.join(slist_or_str).lower())        
-        ss_or_sl = ss_or_sl.split('\n')
+            ss_or_sl = pr.sub(' ' , '\n'.join(slist_or_str).lower())
+            ss_or_sl = re.sub('\n',';\n',ss_or_sl)        
+        ss_or_sl = ss_or_sl.splitlines()
         split_str = '\n'
     else:
         ss_or_sl,split_str = s2l(slist_or_str,split_len = split_len)
     
     if isinstance(ss_or_sl,str):
-        #print('翻译中')
-        #print(f'{ss_or_sl[:20]=}, {argdict=}')
-        # tlist_or_str = funt(**argdict).translate(ss_or_sl)
-        # tlist_or_str = asyncio.run( async_translate(funt(**argdict).translate, ss_or_sl))
-        
         for i in range(try_num):
             try:
                 tlist_or_str = run_with_timeout(funt(**argdict).translate, ss_or_sl)
@@ -307,30 +277,24 @@ def DoTranslate(funt,split_len,slist_or_str, sleep_time, singaltrans,argdict):
                 if isinstance(tlist_or_str, str):
                     break
                 else:
-                    raise TimeoutError('网络超时')
+                    raise TimeoutError('error')
             except BaseException as e :
-                #print('错误类型',type(e),str(e))
-                #print('出错',i+1,'次')
                 tlist_or_str = None
             except :
-                #print('不明错误')
                 tlist_or_str = None
 
             
         if isinstance(tlist_or_str, str):
             pass
         else:
-            raise TimeoutError('超时')
+            raise TimeoutError('error')
         
 
         
     else:
         trantext =None
-        #print('分割数量',len(ss_or_sl))
-        # #print(ss_or_sl,split_str)
         tls = []
         for text in ss_or_sl:
-            #print('分段翻译中')
             # 翻译每一段，并使用传入的翻译函数
             for i in range(try_num):
                 try:
@@ -342,12 +306,9 @@ def DoTranslate(funt,split_len,slist_or_str, sleep_time, singaltrans,argdict):
                         trantext = None
                         raise TimeoutError('网络超时')
                 except BaseException as e :
-                    #print('错误类型',type(e),str(e))
-                    #print('出错',i+1,'次')
                     trantext = None
                 except :
                     trantext = None
-                    #print('不明错误')
             if isinstance(trantext, str):
                 tls.append(trantext)
             else:
@@ -355,14 +316,11 @@ def DoTranslate(funt,split_len,slist_or_str, sleep_time, singaltrans,argdict):
         tlist_or_str = split_str.join(tls)
 
     if isinstance(slist_or_str,str):
-        #print('进来时是字符串')
         o_o=' '
     else:
-        #print('进来时是列表')
         o_o='_'
+    tlist_or_str = re.sub(';','', tlist_or_str)
     tlist_or_str = pr.sub(o_o , tlist_or_str)
-    #print('结果类型',type(tlist_or_str))
-    #print(f'翻译所用时间{(time.time()-t2):2f}秒\n')#翻译结果:{tlist_or_str[:20]=}
     return tlist_or_str
 
 
@@ -399,14 +357,10 @@ def DictTranslate(funt,slist_or_str, sleep_time, argdict):
 
 def PonsTranslator(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
     argdict = {'source':ponsdict[slg], 'target':ponsdict[tlg]}
-    #print(f'{slist_or_str=}')
-    #print(f'{argdict=}')
     return DictTranslate(dt.PonsTranslator,slist_or_str, sleep_time, argdict)#定义LingueeTranslator函数
 
 def LingueeTranslator(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
     argdict = {'source':lingueedict[slg], 'target':lingueedict[tlg]}
-    #print(f'{slist_or_str=}')
-    #print(f'{argdict=}')
     return DictTranslate(dt.LingueeTranslator,slist_or_str, sleep_time, argdict) 
 
 

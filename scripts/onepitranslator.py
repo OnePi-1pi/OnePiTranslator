@@ -10,6 +10,7 @@ import requests
 import threading
 import webbrowser
 import subprocess
+import regex as re
 from pathlib import Path
 import  choose_translate
 import ttkbootstrap as ttk
@@ -313,7 +314,7 @@ class TranslationApp:
         x_scroll.pack(side=BOTTOM, fill=X)
         y_scroll = ttk.Scrollbar(labelframe10, orient=VERTICAL,command=self.tree.yview)
         y_scroll.pack(side=RIGHT, fill=Y)
-        self.tree.configure( xscrollcommand=x_scroll.set, yscrollcommand=y_scroll.set,cursor="pencil")        
+        self.tree.configure( xscrollcommand=x_scroll.set, yscrollcommand=y_scroll.set,cursor="crosshair")        
 
         # 设置列标题
         self.tree.heading("col1", text=MessageCatalog.translate("Original filename"), anchor=CENTER)
@@ -409,8 +410,7 @@ class TranslationApp:
         self.translator_select = ttk.Menubutton(self.translator_options_frame,  menu=self.translator_menu, bootstyle="info")
         self.translator_select.place(relx=0.01, rely=0.4, relheight=0.2, relwidth=0.14, bordermode="inside")
 
-        save_api_key_button = ttk.Button(self.translator_options_frame, text=MessageCatalog.translate("Save API Key"), bootstyle="Danger")
-        save_api_key_button.configure(command=save_api_keys_to_file)
+        save_api_key_button = ttk.Button(self.translator_options_frame, text=MessageCatalog.translate("Save API Key"), bootstyle="Danger",command=save_api_keys_to_file)
         save_api_key_button.place(relx=0.9, rely=0.4, relheight=0.2, relwidth=0.09,  bordermode="inside")
 
         self.middle_frame = ttk.Frame(frame)
@@ -609,7 +609,7 @@ class TranslationApp:
     def show_menu(self, event):
         # 定位菜单到鼠标的位置
         self.context_menu.post(event.x_root, event.y_root)
-        #print($1)
+        
         return 
     #---------------------------值变化时改变TreeView-------------------------------------
     def on_value_change(self,event=None):
@@ -687,7 +687,7 @@ class TranslationApp:
     def delete_selected_rows(self,event=None):
         global pathall,dict_path_colid_trand,dict_source_renamed
         selected_items = self.tree.selection()
-        #print($1)
+        
         for item in reversed(selected_items):
             for key, value in dict_path_colid_trand.items():
                 if value[0] == item: 
@@ -704,7 +704,7 @@ class TranslationApp:
     def adjust_row_height(self,event=None):
         total_height = self.tree.winfo_height()
         row_height = total_height // 20
-        #print($1)
+        
         self.style.configure("info.Treeview", rowheight=row_height)
         self.tree.update_idletasks()
         return "break"
@@ -751,7 +751,7 @@ class TranslationApp:
             global pathall
             pathadd =   list(set(sal) - set(pathall))
             pathall +=  pathadd
-            #print($1)
+            
             self.upviewtree(colnum="col1",pathadd=pathadd)
             self.upviewtree(pathadd = pathall ,colnum = "retag")
         return 
@@ -791,23 +791,54 @@ class TranslationApp:
     #---------------------------列表翻译方法-------------------------------------
     def translate_list(self):
         global dict_path_colid_trand
-        # #print($1)
-        transing = list(map(lambda x: x.stem ,dict_path_colid_trand))
-        txt_length = sum(map(len , transing ))
+        # 
+        stemmed_words = list(map(lambda x: x.stem ,dict_path_colid_trand))
+        txt_length = sum(map(len , stemmed_words ))
         
-        # #print($1)
+        # 
         # 翻译translate,接受文本并返回翻译后的文本
         if txt_length:
             wtime=wait_time(txt_length)
-            translated_text = self.translate_all(wtime,transing)
+            # print(stemmed_words)
+            translated_text = self.translate_all(wtime,stemmed_words)
             if translated_text:
-                # translated_list = re.sub(" ", "_",translated_text)
-                translated_list = translated_text.split("\n")
+                # print(repr(translated_text))
+                translated_text = translated_text.strip()
+                translated_list = translated_text.splitlines()
+                slen = len(dict_path_colid_trand)
+                #如果返回的和传入的行数不一致，则尝试再使用其他分隔符分割：
+                #大于时
+                if len(translated_list) > slen:
+                    #尝试替换空行
+                    lines = translated_text.splitlines()
+                    cleaned_lines = [line for line in lines if line.strip()]
+                    if len(cleaned_lines) > slen:
+                        Messagebox.show_question(message=repr(translated_text),title= 'turn number more wrong')
+                        return False
+                    elif len(cleaned_lines) <= slen:
+                        translated_list='\n'.join(cleaned_lines)
+                #小于时
+                if len(translated_list) < slen:
+                    #先尝试替换常见符号
+                    for split_str in [';' ,'.' , '。',' ' ,',' ,'，',"'" ,'"' ,'_','-','']:
+
+                        translated_temp = re.sub(split_str, "\n",translated_text)
+                        translated_list = translated_temp.splitlines()
+                        if len(translated_list)  == slen:
+                            #print(f'{split_str=}')
+                            break
+                    #替换结束后如果长度小于原始，则替换全部符号
+                    if split_str == '':
+                        translated_temp = re.sub(r"[^\p{L}\p{N}\p{M}\n]", "\n",translated_text)
+                        translated_list = translated_temp.splitlines()
+                    #替换结束后如果长度大于原始，则直接报错
+                if len(translated_list) != slen:
+                    Messagebox.show_question(message=repr(translated_text),title= 'turn number less wrong')
+                    return False
                 for i,key in enumerate(dict_path_colid_trand):
                     dict_path_colid_trand[key] = [dict_path_colid_trand[key][0],translated_list[i]]
-                # #print($1)
+                # 
                 self.upviewtree(colnum="col2",pathadd=pathall)
-
         return None
     #---------------------------文档翻译方法-------------------------------------
     def translate_files(self):
@@ -873,7 +904,7 @@ class TranslationApp:
                     mm = mt
                 Messagebox.show_question(message=mm,title= mt)
 
-        #print(nfts)
+
         return None
     #---------------------------文本翻译方法-------------------------------------
     def translate_text(self):
@@ -905,10 +936,10 @@ class TranslationApp:
                 title="api_key need")
             return False
         Process(target=creat_meter, args=(wtime,targs["sleep_time"],event),daemon=True).start()
-        #print($1)
+        
         try  :
             # 翻译文本并返回翻译后的文本
-            # #print($1)
+            # 
             translated = translation_engines[engine](**targs)
         except AttributeError as a:
             event.set()
@@ -932,7 +963,7 @@ class TranslationApp:
 
         except:
             event.set()
-            #print($1)
+            
             Messagebox.show_question(message=MessageCatalog.translate("Unknown Error"),title= MessageCatalog.translate("Error"))
         else:
             return translated
@@ -941,7 +972,7 @@ class TranslationApp:
         return None
     #---------------------------增加删除原文件名-------------------------------------
     def add_or_sub(self,event=None):
-        #print($1)
+        
         global dict_path_colid_trand
         global s_name_add_flag
         addpath = []
@@ -1022,7 +1053,6 @@ def read_json_file(file_path):
         else:
             return False
     except Exception :
-        #print($1)
         return False
 #---------------------------循环存储-------------------------------------
 def periodic_save(self):
@@ -1030,7 +1060,6 @@ def periodic_save(self):
 
     with open(Path(__file__).parent /"config.json", "w",encoding="utf_8") as config_file:
         json.dump(config_dict, config_file, indent=4)
-    #print("saved")
     self.root.after(30000, lambda: periodic_save(self))
 
 def save_api_keys_to_file():
@@ -1038,12 +1067,10 @@ def save_api_keys_to_file():
     jsp = Path(__file__).parent /"api_key.json"
     with open(jsp, "w",encoding="utf_8") as f:
         json.dump(api_dict, f, ensure_ascii=False, indent=4)
-    
     if jsp.exists():
          Messagebox.show_question(message=f'{MessageCatalog.translate("file path:")}{jsp}',title= MessageCatalog.translate('Successfully saved'))
     else:
         Messagebox.show_question(message='can not find the json file',title= MessageCatalog.translate('Save failed'))
-    #print($1)
     return
 
 #语言选择退出
@@ -1061,18 +1088,17 @@ def switch_language(lang_code):
     with open(Path(__file__).parent / "config.json", "w",encoding="utf_8") as config_file:
         json.dump(config_dict, config_file, indent=4)
     MessageCatalog.locale(lang_code)
-    #print($1)
+    
     if result == confirm:
         # 退出应用程序
         sys.exit()
-        #print($1)
+        
     return
 
 def creat_meter(duration,sleeptime,event):
     rootm = ttk.Window()
     rootm.place_window_center()
     tall = int((duration+sleeptime)*5)
-    #print($1)
     meter = ttk.Meter(master=rootm,
                 metersize=300,            # 设置 meter 的大小
                 padding=20,               # 设置内边距
@@ -1090,7 +1116,6 @@ def creat_meter(duration,sleeptime,event):
     rootm.update()
     mmn=0
     def update_meter(count):
-        # #print($1)
         if event.is_set() or count == 200:#
             rootm.destroy()
             return 1
@@ -1100,7 +1125,6 @@ def creat_meter(duration,sleeptime,event):
         rootm.after(tall,update_meter,count)
     mmn = update_meter(0)
     if mmn:
-        #print($1)
         return
     else:
         rootm.mainloop()
@@ -1147,9 +1171,8 @@ if __name__== "__main__":
     config_dict={}
     json_f_dict = {'api_key.json':api_dict,'config.json':config_dict}
     for filename , dictname in json_f_dict.items():
-        #print(filename)
         conval = read_json_file(filename)
-    if conval : dictname.update(conval)
+        if conval : dictname.update(conval)
     
     lang_options = {
     "简体中文": "zh_cn",
@@ -1191,7 +1214,6 @@ if __name__ == "__main__":
     MessageCatalog.load(Path(__file__).parent.parent / 'src')
     l = config_dict.get('option_lang',MessageCatalog.locale())
     lc = lang_options.values()
-    print(l,l[:2] in lc)
     if l in lc :
         MessageCatalog.locale(l)
     elif l[:2] in lc :

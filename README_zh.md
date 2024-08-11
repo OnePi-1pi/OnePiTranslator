@@ -1,5 +1,5 @@
-# OnePiTranslator
- A simple GUI tool for translating text or documents and rename files or folders name . using both online(deeptranlator) and offline(argos translate) methods.
+# 一派多功能翻译器
+一个简单的GUI工具，用于翻译文本或文档并重命名文件或文件夹名称。使用在线（deeptranslator）和离线（argos翻译）翻译。
 ---
 
 
@@ -8,6 +8,8 @@
 离线翻译 Argos Translate 与在线翻译 DeepTranslator 的整合版 GUI 程序，可用来翻译文本、文档或批量翻译并重命名文件或文件夹。修复了 DeepTranslator 的一些小 bug，并对 Argos Translate 进行了优化。
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue) ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
+
+<img src="./resources/images/cnshow1.png" alt="img1" width="300">- - - - -  -<img src="./resources/images/cnshow3.png" alt="img2" width="300">
 
 # 目录
 
@@ -21,15 +23,24 @@
 
 - 🌐 **支持多种语言**  
   支持的语言选项包括：简体中文、English、العربية、Français、Español、Português、Deutsch、한국어、Italiano、日本語、Русский、Polski、हिन्दी、Türkçe、ไทย、繁体中文。
+  
+  <img src="./resources/images/cnshow4.png" alt="img3" width="300">
 
-- ⚙️ **在线与离线翻译整合**  
-  结合在线翻译（通过 DeepTranslator）和离线翻译（通过 Argos Translate），根据网络环境智能切换。
+- ⚙️ **多翻译引擎整合**  
+  结合在线翻译（通过 DeepTranslator）和离线翻译（通过 Argos Translate），且能存储api-key，根据需要一键切换。
+
+  <img src="./resources/images/enshow2.png" alt="img4" width="300">
+  
+  <img src="./resources/images/enshow4.png" alt="img5" width="300">
 
 - 📁 **批量翻译与重命名**  
-  支持批量翻译文件名或文件夹名，翻译后可自动重命名，并支持撤销操作。
+  支持批量翻译文件名或文件夹名，翻译后可手动更改，也可添加原文件名，然后重命名，重命名后支持撤销操作。
+
+  <img src="./resources/images/cnshow5.png" alt="img6" width="300">
 
 - 🔄 **智能翻译引擎选择**  
-  可根据需求选择不同的翻译引擎，通过简洁的界面操作调整翻译设置。注意：大部分翻译引擎需要 API Key，用户可在选项中查看详细信息。
+  也可支持文本翻译与文档批量翻译，argos在文本量少时仅使用单核，在文本量大时自动使用全部CPU核心。
+  <img src="./resources/images/cnshow6.png" alt="img7" width="300">- - - - - -<img src="./resources/images/cnshow4.png" alt="img7" width="300">
 
 ## 🚀 安装
 
@@ -38,7 +49,7 @@
 - 💻 **在线安装包** [链接]  
   下载后安装即用，完全不用任何代码操作。网络好的可以下载。安装后还需要下载模块，针对中国网络优化，自动设置 pypi 源为清华源。
 
-- 📦 **无 Argos 离线安装包** [链接]  
+- 📦 **无 Argos 离线安装包（作者推荐）** [链接]
   推荐给不想改变源或不想再下载模块的用户，仅需下载此包即可使用在线翻译。后续如需离线翻译，可通过工作目录下的 `install_argos_translate.bat` 进行安装。
 
 - 💽 **全功能本地安装包** [链接]  
@@ -47,7 +58,7 @@
 - 🖥️ **含 CUDA 安装包** [链接]  
   包含 CUDA 及配套的 Torch 等组件，适合需要 GPU 加速的用户。体积较大（>5G）。CUDA可以显著加速离线翻译时间，由于作者显卡是魔改版1080，windows下更不了驱动，因此只测试了linux下的CUDA加速,这是不同模式的时间统计图。
   
-
+  <img src="./resources/images/cuda-time.png" alt="CUDA 时间统计" width="300">
 ### 2️⃣ Pypi 安装（推荐已安装 Python 的用户）
 
 ```bash
@@ -100,12 +111,9 @@ python -m pip install argostranslate
 - **📄 文档**: [https://github.com/OnePi-1pi/OnePiTranslator/README_zh.md](https://github.com/OnePi-1pi/OnePiTranslator/README_zh.md)
 - **🌐 GitHub**: [https://github.com/OnePi-1pi/OnePiTranslator](https://github.com/OnePi-1pi/OnePiTranslator)
 
+## ❓ 未解决问题
+在使用CUDA加速argostranslate翻译时，GPU不能发挥全部能力，貌似有io瓶颈。torch与CUDA与驱动版本均吻合。尝试调高torch参数，包括增大Batch Size等，均未解决此问题。
 
-## 📝 许可证
-
-本项目使用 [AGPL-3.0 许可证](LICENSE)，并附加以下额外条款：
-- 必须保留原始作者的信息，不得修改版权声明。
-- 所有的再发布必须得到原作者的书面许可。
-
+<img src="./resources/images/CUDAandNV.jpg" alt="img1" width="300">
 
 ---
