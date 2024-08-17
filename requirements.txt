@@ -7,6 +7,6 @@ deep_translator[ai]
 deep_translator[docx]
 deep_translator[pdf]
 regex
-argostranslate
 
-# take attention pip can not install `xxx_sent_ud_sm` model，download link: https://spacy.io/models/xx#xx_sent_ud_sm
+#argostranslate
+# take attention argostranslate need spacy and spacy also need install `xx_sent_ud_sm` model，ues <python -m spacy download xx_sent_ud_sm> or download from link: https://spacy.io/models/xx#xx_sent_ud_sm

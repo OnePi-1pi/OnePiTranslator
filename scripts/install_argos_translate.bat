@@ -14,9 +14,9 @@ endlocal
 echo ok!
 
 echo  
-%~dp0\python-3.12.5-embed-amd64\python.exe -m pip install  --upgrade argostranslate 
+python -m pip install  --upgrade argostranslate 
 
-%~dp0\python-3.12.5-embed-amd64\python.exe -m pip install %~dp0\whl\xxx_sent_ud_sm-3.7.0-py3-none-any.whl
+python -m spacy download xx_sent_ud_sm
 echo   
 
 echo complete,if you want to use CUDA ,you also need to install  nvidia driver and cuda Version compliant  with nvtorch

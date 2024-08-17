@@ -9,7 +9,7 @@
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue) ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 
-<img src="./resources/images/cnshow1.png" alt="img1" width="300">- - - - -  -<img src="./resources/images/cnshow3.png" alt="img2" width="300">
+<img src="./resources/images/all.gif" alt="img1" width="400">
 
 # 目录
 
@@ -64,14 +64,20 @@
 ```bash
 python -m pip install onepitranslator
 ```
+默认只安装在线翻译。
 
-如需使用离线翻译：
+如需使用离线翻译，可继续安装argostranslate：
 
 ```bash
 python -m pip install argostranslate
 ```
 
-此外，还需手动下载 `xx_sent_ud_sm` 模块：  
+此外，离线翻译还需下载spacy 的 `xx_sent_ud_sm` 模块：
+
+```bash
+python -m spacy download xx_sent_ud_sm
+```
+或者手动下载：➡️
 [下载链接](https://spacy.io/models/xx#xx_sent_ud_sm)
 
 ## 📖 说明
@@ -106,10 +112,14 @@ python -m pip install argostranslate
 
 
 ## 🔗 链接
-
-- **📹 视频**: [链接 1] [链接 2] [链接 3] [链接 4]
+- **📹 视频**:
+- ***[哔哩哔哩](https://www.bilibili.com/video/BV1mQe5ePEUp/?share_source=copy_web&vd_source=2479572e87b2a5619bdc6332186b5269)***
+- ***[西瓜视频](https://www.ixigua.com/7403916189837853195)***
 - **📄 文档**: [https://github.com/OnePi-1pi/OnePiTranslator/README_zh.md](https://github.com/OnePi-1pi/OnePiTranslator/README_zh.md)
 - **🌐 GitHub**: [https://github.com/OnePi-1pi/OnePiTranslator](https://github.com/OnePi-1pi/OnePiTranslator)
+- **deep-translator**:https://github.com/nidhaloff/deep-translator
+- **argos-translate**:https://github.com/nidhaloff/deep-translator
+- **ttkbootstrap**:https://github.com/israel-dryer/ttkbootstrap
 
 ## ❓ 未解决问题
 在使用CUDA加速argostranslate翻译时，GPU不能发挥全部能力，貌似有io瓶颈。torch与CUDA与驱动版本均吻合。尝试调高torch参数，包括增大Batch Size等，均未解决此问题。

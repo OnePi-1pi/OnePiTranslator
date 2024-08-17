@@ -64,22 +64,22 @@ def run_target(pipe,func, arg):
 def run_with_timeout(func, arg):
     global result
     result = None
+    wtime=wait_time(len(arg))
     parent_conn, child_conn = Pipe()  # 创建一个管道
     # 创建 Process 对象,将目标函数和参数传递给它
-    p = Process(target=run_target, args=(child_conn,func, arg))
-    time1 = time.time()
-    wtime=wait_time(len(arg))
-    p.start()
-    time2 = time.time()
-    child_pid =p.pid
-    p.join(wtime)
-    time3 = time.time()
-    # 如果子进程超时,尝试终止,不成功则终止父进程
-    if p.is_alive():
-        time4 = time.time()
-        os.kill(child_pid, signal.SIGTERM)
-        raise TimeoutError('网络超时')
-    result = parent_conn.recv()
+    if wtime < 100:
+        result =  func(arg)
+    else:
+        p = Process(target=run_target, args=(child_conn,func, arg))
+        
+        p.start()
+        child_pid =p.pid
+        p.join(wtime)
+        # 如果子进程超时,尝试终止,不成功则终止父进程
+        if p.is_alive():
+            os.kill(child_pid, signal.SIGTERM)
+            raise TimeoutError('网络超时')
+        result = parent_conn.recv()
     return result
     # 尝试获取结果,如果超时可能需要处理异常或返回特定值
 
@@ -92,7 +92,7 @@ def s2l(slist_or_str,split_len = 0):
     else:
         #不是字符串则替换符号为空格并将每个元素加换行符形成字符串存为ss
         ss=pr.sub(' ','\n'.join(slist_or_str).lower())
-        ss = re.sub('\n',';\n',ss).strip()
+        ss = re.sub('\n',';;\n',ss).strip()
     #如果指定了分割长度
     if split_len != 0 :
         #则使用指定分割
@@ -160,7 +160,8 @@ def OfflineTranslantor(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
     else:
         #进来时是列表
         o_o='_'
-    tlist_or_str = pr.sub(o_o , tlist_or_str)
+    tlist_or_str = re.sub('[;,；]','', tlist_or_str)
+    tlist_or_str = pr.sub(o_o, tlist_or_str)
     return tlist_or_str
 
 #写没有key与source时的情况，直接从deep-translator对应父类代码里扒的。
@@ -263,7 +264,7 @@ def DoTranslate(funt,split_len,slist_or_str, sleep_time, singaltrans,argdict):
             ss_or_sl = slist_or_str.lower()
         else:
             ss_or_sl = pr.sub(' ' , '\n'.join(slist_or_str).lower())
-            ss_or_sl = re.sub('\n',';\n',ss_or_sl)        
+            ss_or_sl = re.sub('\n',' ;\n',ss_or_sl)        
         ss_or_sl = ss_or_sl.splitlines()
         split_str = '\n'
     else:
@@ -319,7 +320,7 @@ def DoTranslate(funt,split_len,slist_or_str, sleep_time, singaltrans,argdict):
         o_o=' '
     else:
         o_o='_'
-    tlist_or_str = re.sub(';','', tlist_or_str)
+    tlist_or_str = re.sub('[;,；]','', tlist_or_str)
     tlist_or_str = pr.sub(o_o , tlist_or_str)
     return tlist_or_str
 
@@ -376,12 +377,12 @@ def detection(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
 
 
 def GoogleTranslator(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
-    split_len =5000
+    split_len =3000
     argdict = {'source':googledict[slg], 'target':googledict[tlg]}
     return DoTranslate(dt.GoogleTranslator,split_len,slist_or_str,sleep_time, singaltrans,argdict)
 
 def LibreTranslator(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
-    split_len =5000
+    split_len =3000
     if key[0][:4] != 'http':
         key[0] = 'https://'+key[0]
     if key[1] :
@@ -397,12 +398,12 @@ def BaiduTranslator(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
     return DoTranslate(dt.BaiduTranslator,split_len,slist_or_str,sleep_time, singaltrans,argdict)
 
 def MyMemoryTranslator(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
-    split_len =500
+    split_len =400
     argdict = {'source':mymemorydict[slg], 'target':mymemorydict[tlg]}
     return DoTranslate(dt.MyMemoryTranslator,split_len,slist_or_str,sleep_time, singaltrans,argdict)
 
 def DeeplTranslator(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
-    split_len =5000
+    split_len =3000
     if key[0][-2:] == 'fx':
         usekey=True
     else:
@@ -411,12 +412,12 @@ def DeeplTranslator(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
     return DoTranslate(dt.DeeplTranslator,split_len,slist_or_str,sleep_time, singaltrans,argdict)
 
 def YandexTranslator(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
-    split_len =1500
+    split_len =1000
     argdict = {'source':googledict[slg], 'target':googledict[tlg],'api_key':key[0]}
     return DoTranslate(dt.YandexTranslator,split_len,slist_or_str,sleep_time, singaltrans,argdict)            
 
 def MicrosoftTranslator(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
-    split_len =5000
+    split_len =3000
     argdict = {'target':microsoftdict[tlg],'api_key':key[0]}
     
     if key[1]:
@@ -429,7 +430,7 @@ def MicrosoftTranslator(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
     return DoTranslate(func,split_len,slist_or_str,sleep_time, singaltrans,argdict)            
 
 def ChatGptTranslator(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
-    split_len =1500
+    split_len =1000
     if slg == 'auto':
         argdict = {'target':googledict[tlg],'api_key':key[0]}
     else:
@@ -437,7 +438,7 @@ def ChatGptTranslator(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
     return DoTranslate(dt.ChatGptTranslator,split_len,slist_or_str,sleep_time, singaltrans,argdict)  
 
 def PapagoTranslator(slist_or_str, slg, tlg, key, sleep_time, singaltrans):
-    split_len =1500
+    split_len =1000
     argdict = {'source':papagodict[slg], 'target':papagodict[tlg],'client_id':key[0], 'secret_key':key[1]}
     return DoTranslate(dt.PapagoTranslator,split_len,slist_or_str,sleep_time, singaltrans,argdict)            
 

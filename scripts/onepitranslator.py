@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+
 import os
 import sys
 import json
@@ -935,7 +936,8 @@ class TranslationApp:
                 message=MessageCatalog.translate("Missing API settings, please check if the API or URL in the <Options and Settings> area is set correctly"),
                 title="api_key need")
             return False
-        Process(target=creat_meter, args=(wtime,targs["sleep_time"],event),daemon=True).start()
+        if wtime >= 100:
+            Process(target=creat_meter, args=(wtime,targs["sleep_time"],event),daemon=True).start()
         
         try  :
             # 翻译文本并返回翻译后的文本
