@@ -44,13 +44,15 @@ An integrated GUI program of offline translation Argos Translate and online tran
 
 ### 1️⃣ Installation Package (Recommended for Windows Systems)
 
-- 💻 **Online Installation Package size:19.9M** [Link]  
+- 💻 **Online Installation Package size:19.9M** [china special edition](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/online_install_windows_cn.exe)
+
   Download and install to use, no code operation required at all. Suitable for those with good internet connection. After installation, modules still need to be downloaded. 
 
-- 📦 **Package without Argos (Author's Recommendation) size:25.0M** [Link]
-  Recommended for users who don't want to change the source or download additional modules. Only need to download this package to use online translation. If offline translation is needed later, it can be installed through `install_argos_translate.bat` in the working directory.
+- 📦 **Package without Argos (Author's Recommendation) size:25.0M** [china special edition](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/no_argos_install_windows_cn.exe)
+  
+  Only need to download this package to use online translation. If offline translation is needed later, it can be installed through `install_argos_translate.bat` in the working directory.
 
-- 💽 **Local  Package size:249M** [Link]  
+- 💽 **Local  Package size:249M** [china special edition](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/local_install_windows_cn.exe)  
   Contains all necessary components except CUDA acceleration components. Large in size , can use online translation and CPU-driven offline translation after installation. (Will automatically use all CPU processes for large amounts of text, but the speed improvement is still limited, see CUDA installation package description below).
 
 - ~~🖥️ **Installation Package with CUDA** [Link]~~  
@@ -114,8 +116,11 @@ Supports selecting all files within a single folder (including subfolders), or s
 
 ## 🔗 Links
 - **📹 Videos**:
+- ***[youtube](https://youtube.com/@onepi-i8x?si=QrX5QF_QR-iaBArL)***
+- ***[tiktok](https://www.tiktok.com/@onepizen)***
 - ***[Bilibili](https://www.bilibili.com/video/BV1mQe5ePEUp/?share_source=copy_web&vd_source=2479572e87b2a5619bdc6332186b5269)***
 - ***[Xigua Video](https://www.ixigua.com/7403916189837853195)***
+
 - **📄 Documentation**: [https://github.com/OnePi-1pi/OnePiTranslator/README_zh.md](https://github.com/OnePi-1pi/OnePiTranslator/README_zh.md)
 - **🌐 GitHub**: [https://github.com/OnePi-1pi/OnePiTranslator](https://github.com/OnePi-1pi/OnePiTranslator)
 - **deep-translator**: https://github.com/nidhaloff/deep-translator

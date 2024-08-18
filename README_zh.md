@@ -46,13 +46,14 @@
 
 ### 1️⃣ 安装包（推荐 Windows 系统）
 
-- 💻 **在线安装包 大小：19.9M** [链接]  
+- 💻 **在线安装包 大小：19.9M** [链接](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/online_install_windows_cn.exe)  
   下载后安装即用，完全不用任何代码操作。网络好的可以下载。安装后还需要下载模块，针对中国网络优化，自动设置 pypi 源为清华源。
 
-- 📦 **无 Argos安装包  大小：25.0M（作者推荐）** [链接]
-  推荐给不想改变源或不想再下载模块的用户，仅需下载此包即可使用在线翻译。后续如需离线翻译，可通过工作目录下的 `install_argos_translate.bat` 进行安装。
+- 📦 **无 Argos安装包  大小：25.0M（作者推荐）** [链接](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/no_argos_install_windows_cn.exe) 
 
-- 💽 **完整安装包 大小：249M  ** [链接]  
+  推荐给不想改变源或不想再下载模块且仅需要在线翻译的用户，仅需下载此包即可使用在线翻译。后续如需离线翻译，可通过工作目录下的 `install_argos_translate.bat` 进行安装。
+
+- 💽 **完整安装包 大小：249M  ** [链接](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/local_install_windows_cn.exe)    
   包含除 CUDA 加速组件外的所有必需组件。体积较大，安装后可使用在线翻译和 CPU 驱动的离线翻译。（文本量大时会自动启用CPU全进程，但是提升速度依然有限，见下面CUDA安装包描述）。
 
 - ~~🖥️ **含 CUDA 安装包** [链接]~~  
@@ -118,6 +119,9 @@ python -m pip install "numpy>=1.0.0,<2.0.0"
 - **📹 视频**:
 - ***[哔哩哔哩](https://www.bilibili.com/video/BV1mQe5ePEUp/?share_source=copy_web&vd_source=2479572e87b2a5619bdc6332186b5269)***
 - ***[西瓜视频](https://www.ixigua.com/7403916189837853195)***
+- ***[youtube](https://youtube.com/@onepi-i8x?si=QrX5QF_QR-iaBArL)***
+- ***[tiktok](https://www.tiktok.com/@onepizen)***
+
 - **📄 文档**: [https://github.com/OnePi-1pi/OnePiTranslator/README_zh.md](https://github.com/OnePi-1pi/OnePiTranslator/README_zh.md)
 - **🌐 GitHub**: [https://github.com/OnePi-1pi/OnePiTranslator](https://github.com/OnePi-1pi/OnePiTranslator)
 - **deep-translator**:https://github.com/nidhaloff/deep-translator
