@@ -24,39 +24,39 @@
 - 🌐 **支持多种语言**  
   支持的语言选项包括：简体中文、English、العربية、Français、Español、Português、Deutsch、한국어、Italiano、日本語、Русский、Polski、हिन्दी、Türkçe、ไทย、繁体中文。
   
-  <img src="./resources/images/cnshow4.png" alt="img3" width="300">
+
 
 - ⚙️ **多翻译引擎整合**  
   结合在线翻译（通过 DeepTranslator）和离线翻译（通过 Argos Translate），且能存储api-key，根据需要一键切换。
 
-  <img src="./resources/images/enshow2.png" alt="img4" width="300">
+
   
   <img src="./resources/images/enshow4.png" alt="img5" width="300">
 
 - 📁 **批量翻译与重命名**  
   支持批量翻译文件名或文件夹名，翻译后可手动更改，也可添加原文件名，然后重命名，重命名后支持撤销操作。
 
-  <img src="./resources/images/cnshow5.png" alt="img6" width="300">
 
-- 🔄 **智能翻译引擎选择**  
+
+- 🔄 **多核心优化**  
   也可支持文本翻译与文档批量翻译，argos在文本量少时仅使用单核，在文本量大时自动使用全部CPU核心。
-  <img src="./resources/images/cnshow6.png" alt="img7" width="300">- - - - - -<img src="./resources/images/cnshow4.png" alt="img7" width="300">
+
 
 ## 🚀 安装
 
 ### 1️⃣ 安装包（推荐 Windows 系统）
 
-- 💻 **在线安装包** [链接]  
+- 💻 **在线安装包 大小：19.9M** [链接]  
   下载后安装即用，完全不用任何代码操作。网络好的可以下载。安装后还需要下载模块，针对中国网络优化，自动设置 pypi 源为清华源。
 
-- 📦 **无 Argos 离线安装包（作者推荐）** [链接]
+- 📦 **无 Argos安装包  大小：25.0M（作者推荐）** [链接]
   推荐给不想改变源或不想再下载模块的用户，仅需下载此包即可使用在线翻译。后续如需离线翻译，可通过工作目录下的 `install_argos_translate.bat` 进行安装。
 
-- 💽 **全功能本地安装包** [链接]  
-  包含除 CUDA 加速组件外的所有必需组件。体积较大（>2G），安装后可使用在线翻译和 CPU 驱动的离线翻译。（文本量大时会自动启用CPU全进程，但是提升速度依然有限，见下面CUDA安装包描述）。
+- 💽 **完整安装包 大小：249M  ** [链接]  
+  包含除 CUDA 加速组件外的所有必需组件。体积较大，安装后可使用在线翻译和 CPU 驱动的离线翻译。（文本量大时会自动启用CPU全进程，但是提升速度依然有限，见下面CUDA安装包描述）。
 
-- 🖥️ **含 CUDA 安装包** [链接]  
-  包含 CUDA 及配套的 Torch 等组件，适合需要 GPU 加速的用户。体积较大（>5G）。CUDA可以显著加速离线翻译时间，由于作者显卡是魔改版1080，windows下更不了驱动，因此只测试了linux下的CUDA加速,这是不同模式的时间统计图。
+- ~~🖥️ **含 CUDA 安装包** [链接]~~  
+  ~~包含 CUDA 及配套的 Torch 等组件~~，适合需要 GPU 加速的用户。体积较大（>5G）。CUDA可以显著加速离线翻译时间，由于作者显卡是魔改版1080，windows下更不了驱动，因此只测试了linux下的CUDA加速,这是不同模式的时间统计图。
   
   <img src="./resources/images/cuda-time.png" alt="CUDA 时间统计" width="300">
 ### 2️⃣ Pypi 安装（推荐已安装 Python 的用户）
@@ -80,29 +80,32 @@ python -m spacy download xx_sent_ud_sm
 或者手动下载：➡️
 [下载链接](https://spacy.io/models/xx#xx_sent_ud_sm)
 
+现在版本的argostranslate可能由于numpy升级的原因无法使用，可以回退版本：
+
+```bash
+python -m pip install "numpy>=1.0.0,<2.0.0"
+```
+
 ## 📖 说明
 
 ### 🌍 语言设置
 
 下载后程序应自动切换到系统所在地区的语言，如果没有，可以手动选择：
 
-![语言设置示例](link_to_image)
+<img src="./resources/images/cnshow4.png" alt="img3" width="300">
 
-### 🔧 功能选择
-
-按需选择功能，选中按钮代表当前所在功能：
-
-![功能选择示例](link_to_image)
 
 ### 📝 翻译器选择
 
 选择需要的翻译器，建议先通过文本翻译进行测试。大部分翻译器需要 API Key，有关是否有免费 API Key 以及申请难度，可以在《选项及设置》中查看。双击网址即可跳转。
 
-![翻译器选择示例](link_to_image)
+<img src="./resources/images/enshow2.png" alt="img4" width="300">
 
 ### 📂 文件/文件夹名批量翻译
 
-支持选择单文件夹内的全部文件（包括子文件夹），或单独选择几个文件（使用 SHIFT 多选或 CTRL 单选）。翻译后可双击或右键修改，选中项可按 Delete 或右键删除。支持批量重命名，并可撤销修改，退回原文件名。
+支持选择单文件夹内的全部文件（不包括子文件夹），或单独选择几个文件（使用 SHIFT 多选或 CTRL 单选）。翻译后可双击或右键修改，选中项可按 Delete 或右键删除。支持批量重命名，并可撤销修改，退回原文件名。
+
+  <img src="./resources/images/cnshow5.png" alt="img6" width="300">
 
 ## 🛠️ 示例使用场景
 

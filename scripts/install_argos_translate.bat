@@ -15,7 +15,7 @@ echo ok!
 
 echo  
 python -m pip install  --upgrade argostranslate 
-
+python -m pip install "numpy>=1.0.0,<2.0.0"
 python -m spacy download xx_sent_ud_sm
 echo   
 
