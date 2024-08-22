@@ -44,33 +44,40 @@
 
 ## 🚀 安装
 
+***注意：在 Windows 上运行 Argos Translate 需要 [Microsoft Visual C++ Redistributable](https://visualstudio.microsoft.com/zh-hans/downloads/#microsoft-visual-c-redistributable-for-visual-studio-2022) 和 LLVM/OpenMP（C++ 官方发行版不包含此库，你可以尝试使用开发版，或直接下载  [libomp140.x86_64.dll](G:\GitHub\OnePiTranslator\resources\libomp140.x86_64.dll) 并将其移动到 `C:\Windows\System32`. 3 和 4 号包 将会自动安装 ,仅需按提示点下一步即可，所以无需手动下载，感谢这位up解决了这个问题 [链接](https://www.bilibili.com/read/cv36895969)***
+---
+
 ### 1️⃣ 安装包（推荐 Windows 系统）
 
-- 💻 **在线安装包 大小：19.9M** [链接](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/online_install_windows_cn.exe)  
-  下载后安装即用，完全不用任何代码操作。网络好的可以下载。安装后还需要下载模块，针对中国网络优化，自动设置 pypi 源为清华源。
 
-- 📦 **无 Argos安装包  大小：25.0M（作者推荐）** [链接](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/no_argos_install_windows_cn.exe) 
+
+- 1.💻 **在线安装包 _大小:~25M_** [链接](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/online_install_windows_cn.exe)  
+  下载后安装即用，完全不用任何代码操作。网络好的可以下载。安装后还需要下载模块，针对中国网络优化，自动设置 pypi 源为清华源。
+---
+- 2.📦 **无 Argos安装包  _大小:~35M_（作者推荐）** [链接](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/no_argos_install_windows_cn.exe) 
 
   推荐给不想改变源或不想再下载模块且仅需要在线翻译的用户，仅需下载此包即可使用在线翻译。后续如需离线翻译，可通过工作目录下的 `install_argos_translate.bat` 进行安装。
+---
+- 3.💽 **完整在线离线翻译安装包 _大小: ~250M_** [链接](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/local_install_windows_cn.exe)    
+  包含除 argos语言包 和 CUDA 加速组件外的所有必需组件。体积较大，安装后可使用在线翻译, 离线翻译还需要单独下载语言包[链接](https://github.com/argosopentech/argos-translate?tab=readme-ov-file#packages)，或直接下载打包好的完整包⬇️⬇️⬇️⬇️
+---
 
-- 💽 **完整安装包 大小：249M  ** [链接](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/local_install_windows_cn.exe)    
-  包含除 CUDA 加速组件外的所有必需组件。体积较大，安装后可使用在线翻译和 CPU 驱动的离线翻译。（文本量大时会自动启用CPU全进程，但是提升速度依然有限，见下面CUDA安装包描述）。
+- 4.🖥️ **附带语言包的完整安装包 _大小: ~2G__** [链接](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/all_add_language_package_windows_cn.exe) 
 
-- ~~🖥️ **含 CUDA 安装包** [链接]~~  
-  ~~包含 CUDA 及配套的 Torch 等组件~~，适合需要 GPU 加速的用户。体积较大（>5G）。CUDA可以显著加速离线翻译时间，由于作者显卡是魔改版1080，windows下更不了驱动，因此只测试了linux下的CUDA加速,这是不同模式的时间统计图。
+  包含全部组件(除了CUDA)。体积很大 >3G。自带语言包{中文（简体）：zh，中文（繁体）：zt，英文：en，法文：fr，西班牙文：es，德文：de，韩文：ko，日文：ja，俄文：ru}
   
-  <img src="./resources/images/cuda-time.png" alt="CUDA 时间统计" width="300">
-### 2️⃣ Pypi 安装（推荐已安装 Python 的用户）
+---
 
+### 2️⃣ Pypi 安装（推荐已安装 Python 的用户）
+#### 在线翻译的安装：
 ```bash
 python -m pip install onepitranslator
 ```
-默认只安装在线翻译。
 
-如需使用离线翻译，可继续安装argostranslate：
+#### 如需使用离线翻译，可继续安装argostranslate：
 
 ```bash
-python -m pip install argostranslate
+python -m pip install argostranslate spacy
 ```
 
 此外，离线翻译还需下载spacy 的 `xx_sent_ud_sm` 模块：
@@ -87,7 +94,18 @@ python -m spacy download xx_sent_ud_sm
 python -m pip install "numpy>=1.0.0,<2.0.0"
 ```
 
+下载语言包[链接](https://github.com/argosopentech/argos-translate?tab=readme-ov-file#packages)
+
+打开软件，选择<选项与设置>里的 _安装本地翻译语言库_ 按钮进行安装
+
 ## 📖 说明
+
+###  ⏳  关于argos和CUDA
+虽然已对argos进行了优化，文本量大时会自动使用全部CPU核心，但是提升速度依然有限。
+CUDA可以显著加速离线翻译时间，由于作者显卡是魔改版1080，windows下更不了驱动，因此只测试了linux下的CUDA加速,这是不同模式的时间统计图。
+
+<img src="./resources/images/cuda-time.png" alt="CUDA 时间统计" width="300">
+
 
 ### 🌍 语言设置
 

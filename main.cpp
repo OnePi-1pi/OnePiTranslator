@@ -3,7 +3,7 @@
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nShowCmd) {
     // 通配符模式
-    std::wstring pattern = L".\\scripts\\onepitranslator.py*";
+    std::wstring pattern = L".\\src\\onepitranslator.py*";
     WIN32_FIND_DATA findFileData;
     HANDLE hFind = FindFirstFile(pattern.c_str(), &findFileData);
 
@@ -13,7 +13,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
     }
 
     std::wstring filename = findFileData.cFileName;
-    std::wstring command = L"pythonw.exe .\\scripts\\" + filename;
+    std::wstring command = L"pythonw.exe .\\src\\" + filename;
 
     STARTUPINFO si = { sizeof(si) };
     PROCESS_INFORMATION pi;

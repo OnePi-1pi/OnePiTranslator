@@ -1,5 +1,5 @@
 #!/bin/bash
-SCRIPT_DIR="./scripts"
+SCRIPT_DIR="./src"
 
 
 SCRIPT_FILE=$(find "$SCRIPT_DIR" -name 'onepitranslator.py*' | head -n 1)

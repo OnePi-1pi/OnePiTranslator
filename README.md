@@ -44,33 +44,39 @@ An integrated GUI program of offline translation Argos Translate and online tran
 
 ### 1️⃣ Installation Package (Recommended for Windows Systems)
 
-- 💻 **Online Installation Package size:19.9M** [china special edition](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/online_install_windows_cn.exe)
+---
+
+***Note: Running Argos Translate on Windows requires the [Microsoft Visual C++ Redistributable](https://visualstudio.microsoft.com/zh-hans/downloads/#microsoft-visual-c-redistributable-for-visual-studio-2022) and LLVM/OpenMP (the official C++ release does not include this library; you can try the development version or simply download [libomp140.x86_64.dll](G:\GitHub\OnePiTranslator\resources\libomp140.x86_64.dll) and move it to `C:\Windows\System32`).  package 3 and 4 will auto install it ,so no additional download is needed.***
+---
+
+
+- 1.💻 **Online Installation Package _size:~25M_** [Link](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/online_install_windows.exe)
 
   Download and install to use, no code operation required at all. Suitable for those with good internet connection. After installation, modules still need to be downloaded. 
 
-- 📦 **Package without Argos (Author's Recommendation) size:25.0M** [china special edition](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/no_argos_install_windows_cn.exe)
+- 2.📦 **Package without Argos (Author's Recommendation) _size:~35M_** [Link](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/no_argos_install_windows.exe)
   
   Only need to download this package to use online translation. If offline translation is needed later, it can be installed through `install_argos_translate.bat` in the working directory.
 
-- 💽 **Local  Package size:249M** [china special edition](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/local_install_windows_cn.exe)  
-  Contains all necessary components except CUDA acceleration components. Large in size , can use online translation and CPU-driven offline translation after installation. (Will automatically use all CPU processes for large amounts of text, but the speed improvement is still limited, see CUDA installation package description below).
+- 3.💽 **Complete Online and Offline Translation Installation Package _size: ~250M_** [Link](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/local_install_windows_cn.exe)  
+  Includes all necessary components except for the Argos language pack and the CUDA acceleration component. The size is relatively large, and after installation, online translation can be used. Offline translation requires the separate download of language packs [Link](https://github.com/argosopentech/argos-translate?tab=readme-ov-file#packages), or you can directly download the well-packaged complete package ↓↓↓↓.
 
-- ~~🖥️ **Installation Package with CUDA** [Link]~~  
-  ~~Contains CUDA and matching components like Torch,~~ suitable for users who need GPU acceleration. Large in size (>5G). CUDA can significantly accelerate offline translation time. As the author's graphics card is a modified version of 1080 and the driver cannot be updated under Windows, only CUDA acceleration under Linux has been tested. This is a time statistics chart for different modes.
-  
-  <img src="./resources/images/cuda-time.png" alt="CUDA Time Statistics" width="300">
+- 4.🖥️ **Complete Installation Package with Language Packs Package _size: ~2G__** [Link](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/all_add_language_package_windows.exe)   
+  Includes all components (except CUDA). The size is very large. Comes with language packs {Simplified Chinese: zh, Traditional Chinese: zt, English: en, French: fr, Spanish: es, German: de, Korean: ko, Japanese: ja, Russian: ru}.
 
-### 2️⃣ PyPI Installation (Recommended for Users with Python Already Installed)
+
+
+### 2️⃣ PyPI Installation (for Users with Python Already Installed)
+#### just install online translate
 
 ```bash
 python -m pip install onepitranslator
 ```
-By default, only online translation is installed.
 
-If you need to use offline translation, you can continue to install argostranslate:
+#### If you need to use offline translation, you can continue to install argostranslate:
 
 ```bash
-python -m pip install argostranslate
+python -m pip install argostranslate spacy
 ```
 
 In addition, offline translation also requires downloading the `xx_sent_ud_sm` module of spacy:
@@ -86,9 +92,17 @@ The current version of argostranslate may not be available due to the numpy upgr
 ```bash
 python -m pip install "numpy>=1.0.0,<2.0.0"
 ```
+download language packs [Link](https://github.com/argosopentech/argos-translate?tab=readme-ov-file#packages)
+
+run software  select _Options and Settings_ choose _Install Local Translation Language Library_ to install language packs
 
 ## 📖 Instructions
 
+### ⏳  Regarding Argos and CUDA
+Although Argos has been optimized and will automatically use all CPU cores when dealing with large volumes of text, the speed increase is still limited.
+CUDA can significantly speed up offline translation time. Since the author's graphics card is a modified version of the gtx1080, and the driver cannot be updated under Windows, only the CUDA acceleration on Linux has been tested. This is a time statistics chart for different modes.
+
+  <img src="./resources/images/cuda-time.png" alt="CUDA Time Statistics" width="300">
 ### 🌍 Language Settings
 
 After downloading, the program should automatically switch to the language of the system's region. If not, you can manually select:

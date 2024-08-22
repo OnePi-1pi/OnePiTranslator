@@ -8,5 +8,7 @@ deep_translator[docx]
 deep_translator[pdf]
 regex
 
+#windows need c++ and LLVM/OpenMP(c++ official release  don't have it ,you can try dev version or just download libomp140.x86_64.dll move to  )
 #argostranslate
+#spacy
 # take attention argostranslate need spacy and spacy also need install `xx_sent_ud_sm` model，ues <python -m spacy download xx_sent_ud_sm> or download from link: https://spacy.io/models/xx#xx_sent_ud_sm
