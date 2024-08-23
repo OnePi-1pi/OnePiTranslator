@@ -67,7 +67,11 @@
   包含全部组件(除了CUDA)。体积很大 >3G。自带语言包{中文（简体）：zh，中文（繁体）：zt，英文：en，法文：fr，西班牙文：es，德文：de，韩文：ko，日文：ja，俄文：ru}
   
 ---
+百度云链接：https://pan.baidu.com/s/1zcyFJZjk8_tyNo0SJdUNBg?pwd=3145 
+提取码：3145
 
+小程序扫码
+![alt text](./resources/images/百度云小程序.png)
 ### 2️⃣ Pypi 安装（推荐已安装 Python 的用户）
 #### 在线翻译的安装：
 ```bash
