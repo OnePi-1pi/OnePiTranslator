@@ -58,7 +58,7 @@ An integrated GUI program of offline translation Argos Translate and online tran
   
   Only need to download this package to use online translation. If offline translation is needed later, it can be installed through `install_argos_translate.bat` in the working directory.
 
-- 3.💽 **Complete Online and Offline Translation Installation Package _size: ~250M_** [Link](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/local_install_windows_cn.exe)  
+- 3.💽 **Complete Online and Offline Translation Installation Package _size: ~250M_** [Link](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/all_local_install_windows.exe)  
   Includes all necessary components except for the Argos language pack and the CUDA acceleration component. The size is relatively large, and after installation, online translation can be used. Offline translation requires the separate download of language packs [Link](https://github.com/argosopentech/argos-translate?tab=readme-ov-file#packages), or you can directly download the well-packaged complete package ↓↓↓↓.
 
 - 4.🖥️ **Complete Installation Package with Language Packs Package _size: ~2G__** [Link](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/all_add_language_package_windows.exe)   
