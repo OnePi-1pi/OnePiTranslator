@@ -4,7 +4,6 @@
 import os
 import sys
 import json
-import msgs
 import math
 import signal
 import qrcode
@@ -22,6 +21,7 @@ from ttkbootstrap.constants import *
 from multiprocessing import Process,Event
 from PIL import Image,ImageTk,ImageFont,ImageDraw
 from ttkbootstrap.dialogs.dialogs import Messagebox
+from ttkbootstrap.dialogs.dialogs import FontDialog
 from ttkbootstrap.localization import MessageCatalog
 import install_offline_translator_language as inslang
 
@@ -36,7 +36,6 @@ class TranslationApp:
         self.selected_key = ttk.IntVar(value=config_dict.get("selected_key", 0))
         self.set_checkw = ttk.IntVar(value=config_dict.get("hidden_key",0))
         self.scale_time = ttk.DoubleVar(value=config_dict.get("time", 0))
-
         self.root = master
         self.root.bind("<Configure>", master.after(40,self.root.update_idletasks()))  
         root.resizable(True,  True)
@@ -58,7 +57,7 @@ class TranslationApp:
         frame3 = ttk.Frame(panedwindow)
         frame3.place(relx=0.0, rely=0.2, relheight=0.8, relwidth=1.0)
 
-
+        font_dialog = FontDialog(root)
 
         # 将三个 Frame 添加到根容器中,并设置布局属性
         # 配置主窗口的行和列权重,使得各部分能够合理分配空间
@@ -68,8 +67,7 @@ class TranslationApp:
         labelframe2 = ttk.Labelframe(frame1,labelanchor="n", text=MessageCatalog.translate("Translation Settings"), borderwidth=0 )
 
         # 将 Labelframe 组件添加到第一个 Frame 中
-        style=ttk.Style()
-        self.style = style
+        self.style=ttk.Style()
         labelframe0.place(relx=0.0, rely=0.0, relheight=0.35, relwidth=0.4, bordermode="inside")
         labelframe1.place(relx=0.0, rely=0.35, relheight=0.65, relwidth=0.4, bordermode="inside")
         labelframe2.place(relx=0.4, rely=0.0, relheight=1.0, relwidth=0.6, bordermode="inside")
@@ -82,12 +80,12 @@ class TranslationApp:
         #____________________________MessageCatalog.translate("Theme Selection")themeframe_____________________________________________#
         theme_menu = ttk.Menu(root, tearoff=0)
         # 遍历翻译,为下拉菜单添加每个选项,使用 lambda 函数关联每个选项的命令
-        for theme in style.theme_names():
+        for theme in self.style.theme_names():
             # 使用 lambda 函数将每个主题与对应的命令关联,当选中主题时应用该主题
-            theme_menu.add_radiobutton(label=theme, command=lambda th=theme : ( style.theme_use(th),theme_select.configure(text=th),update_font(),self.update_treeview_styles()))
+            theme_menu.add_radiobutton(label=theme, command=lambda th=theme : ( self.style.theme_use(th),theme_select.configure(text=th),update_font(),self.update_treeview_styles()))
         
         set_theme = config_dict.get("user_theme",DEFAULT_THEME)
-        style.theme_use(set_theme)
+        self.style.theme_use(set_theme)
         # 创建一个 Menubutton 组件,用于选择翻译引擎
         themeframe = ttk.Labelframe(labelframe1, text=MessageCatalog.translate("Theme Selection"), padding=10, bootstyle="primary"        )
         themeframe.place(relx=0.0, rely=0.0, relheight=1.0, relwidth=0.4, bordermode="inside")
@@ -101,32 +99,88 @@ class TranslationApp:
         # 创建字体大小选择的 Spinbox 组件
         font_size_spinbox = ttk.Spinbox(FontSizeFrame,from_=0,to=72, bootstyle="info")
         self.font_size_spinbox = font_size_spinbox
-        font_size_spinbox.pack(padx=5,pady=10,fill=BOTH,expand=1)
-        
+        font_size_spinbox.pack(padx=5,pady=2,fill='x',expand=1)
+        font_box = ttk.Button(FontSizeFrame,text='font' ,bootstyle="danger")
+        font_box.pack(padx=5,pady=2,fill='x',expand=1)
         #............... 定义更新字体大小的函数......................
-        font_size=ttk.IntVar()
-        self.font_size = font_size
-        font_weight=ttk.StringVar()
-        self.font_weight = font_weight
+
+        self.font_size = ttk.IntVar()
+        self.font_weight = ttk.StringVar()
         def update_font(event=None):
-            now_font=font.Font(font=title.cget("font"))
-            usr_font_size = config_dict.get("font_size",10)
-            usr_font_weight = config_dict.get("font_weight",now_font.actual("weight"))
+            global font_now
+            #获得默认字体字典
+            font_now_name = self.style.lookup('.','font')
+            # style.map('.',font={'size':font_size_val,'weight':font_weight_val})
+            if font_now_name:
+                font_now_dic = font.Font(name=font_now_name,exists=True).actual()
+                font_size_val = int(font_size_spinbox.get() or font_now_dic['size'])
+                font_weight_val = self.font_weight.get() or font_now_dic['weight']
+                font_now_dic.update({'size':font_size_val,'weight':font_weight_val})
+                font_now = font.Font(**font_now_dic)
+            else:
+                default_font = font.Font().actual()
+                #获得用户设置初始值或默认初始值
+                usr_font_size = config_dict.get("font_size",default_font['size'])
+                usr_font_weight = config_dict.get("font_weight",default_font['weight'])
+                #查看现在字体大小设置框是否有值,无值则填写默认值
+                font_size_val = int(font_size_spinbox.get() or usr_font_size)
+                font_weight_val = self.font_weight.get() or usr_font_weight
+                font_now = font.Font(**{'size':font_size_val,'weight':font_weight_val})
+                
 
-            font_size_val = int(font_size_spinbox.get() or usr_font_size)
-            font_size.set(font_size_val)
+            #设置字体大小变量和设置框为当前值
+            self.font_size.set(font_size_val)
             font_size_spinbox.set(font_size_val)
+            #查看现在字体加粗是否选择,无值则为默认
+            self.font_weight.set(font_weight_val)
+            #设置全部件style为只修改大小和加粗
+            self.style.configure('.',font=font_now)
+            font_now_name = self.style.lookup('.','font')
+            font_now_dic = font.Font(name=font_now_name,exists=True).actual()
 
-            font_weight_val = font_weight.get() if font_weight.get() else usr_font_weight
-            font_weight.set(font_weight_val)
-            style.configure(".", font=(now_font.actual("family"),font_size_val,font_weight_val))
-            larger_font = font.Font(family=now_font.actual("family"), size=font_size_val + 5, weight=font_weight_val)
-            for i in [self.note1,self.label_alipay_text,self.label_wechat_text,self.label_bili_text,self.label_douyin_text]:
-                i.configure(font=larger_font)
+            for i in [self.note1,self.label_alipay_text,self.label_wechat_text,self.label_bili_text,self.label_douyin_text,self.note2]:
+                i.configure(font=f'-size {font_size_val+5}')
             self.adjust_row_height()
+            # if style.lookup('.','font'):
+            #     print(style.lookup('.','font'))
+            #     print(font.Font(name=style.lookup('.','font'),exists=True).actual())
+        def change_font(event=None):
+            
+            # 显示对话框并获取结果
+            font_dialog.show()
+
+            # 获取字体设置
+            font_settings = font_dialog.result
+
+            if font_settings:
+                # 解析字体设置
+                font_size_val = font_settings.cget("size")
+                font_weight_val = font_settings.cget("weight")
+
+                # 更新组件的字体
+                self.style.configure('.',font=font_settings)
+                # title.configure(font=new_font)
+                for i in [self.note1, self.label_alipay_text, self.label_wechat_text, self.label_bili_text, self.label_douyin_text]:
+                    i.configure(font=f'-size {font_size_val+5}')
+
+                # 调整行高等布局
+                self.adjust_row_height()
+
+                # 更新字体大小 Spinbox 的显示值
+                self.font_size.set(font_size_val)
+                font_size_spinbox.set(font_size_val)
+                self.font_weight.set(font_weight_val)
+            else:
+                print("Font settings are not available.")
+
+
+
+
+
 
 
         # 配置 Spinbox 的 command 属性,使其在值发生变化时调用 update_font_size 函数
+        font_box.config(command=change_font)
         font_size_spinbox.config(command=update_font)
         font_size_spinbox.bind("<Return>",update_font)
         #____________________________"字体粗细"FontWeightFrame_____________________________________________#
@@ -136,7 +190,7 @@ class TranslationApp:
         master=FontWeightFrame,
         text=MessageCatalog.translate("Normal"),
         value="normal",
-        variable=font_weight,
+        variable=self.font_weight,
         bootstyle="primary",
         command=update_font)
         opt_normal.pack(side=LEFT,fill=BOTH,expand=1, padx=2, pady=2)
@@ -144,7 +198,7 @@ class TranslationApp:
         master=FontWeightFrame,
         text=MessageCatalog.translate("Bold"),
         value="bold",
-        variable=font_weight,
+        variable=self.font_weight,
         bootstyle="warning",
         command=update_font)
         opt_bold.pack(side=LEFT,fill=BOTH,expand=1, padx=2, pady=2)
@@ -487,7 +541,7 @@ class TranslationApp:
         notebook.add(self.note1, text=MessageCatalog.translate("One Pi's Muttering"), sticky=NSEW)  # 第一个标签页,包含文本和布局选项
         notebook.add(picframe1, text=MessageCatalog.translate("Donation Portal")) 
         notebook.add(picframe2, text=MessageCatalog.translate("Media Accounts"))  
-        notebook.add(self.note2, text=MessageCatalog.translate("Software Information"))  
+        notebook.add(self.note2, text=MessageCatalog.translate("Software Information"))
         self.creat_api_options(initname,ininame)
         root.update_idletasks()
         return frame
@@ -1214,8 +1268,8 @@ def run_windows_model_download():
 
 def main():
 
-    global config_dict,json_f_dict,api_dict
-
+    global config_dict,json_f_dict,api_dict,font_now
+    font_now=None
     api_dict={'LibreTranslator': {'label1': 'The mirror website used for translation', 'entry1': 'https://translate.terraprint.co', 'label2': 'apikey', 'entry2': '', 'label3': 'Double click the URL below to see more mirror addresses, do not enter the API key for mirror\n addresses that do not require an API key, location: varies', 'entry3': 'https://github.com/LibreTranslate/LibreTranslate#mirrors'},
  'BaiduTranslator': {'label1': 'User ID (App ID)', 'entry1': '', 'label2': 'Translation key (App Key)', 'entry2': '', 'label3': 'Get a free appid and appkey, it is very simple \nif you have passed the real-name authentication, requires a phone number. Location: China', 'entry3': 'http://api.fanyi.baidu.com/product/113'},
  'YandexTranslator': {'label1': 'apikey', 'entry1': '', 'label3': 'Paid API application website, no free API, the application process is quite cumbersome. Location: Russia', 'entry3': 'https://yandex.cloud/en-ru/docs/translate/api-ref/authentication'},

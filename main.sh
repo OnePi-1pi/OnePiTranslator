@@ -11,6 +11,6 @@ if [ -z "$SCRIPT_FILE" ]; then
 fi
 
 
-pythonw "$SCRIPT_FILE"&
+python3 "$SCRIPT_FILE"&
 
 exit 0
