@@ -9,7 +9,7 @@ An integrated GUI program of offline translation Argos Translate and online tran
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue) ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 
-<img src="./resources/images/all.gif" alt="img1" width="400">
+<img src="./src/onepitranslator/resources/images/all.gif" alt="img1" width="400">
 
 # Table of Contents
 
@@ -31,12 +31,12 @@ An integrated GUI program of offline translation Argos Translate and online tran
 
 
   
-  <img src="./resources/images/enshow4.png" alt="img5" width="300">
+  <img src="./src/onepitranslator/resources/images/enshow4.png" alt="img5" width="300">
 
 - 📁 **Batch Translation and Renaming**  
   Supports batch translation of file names or folder names, which can be manually changed after translation, and original file names can be added, then renamed, with undo operation supported after renaming.
 
-  <img src="./resources/images/cnshow5.png" alt="img6" width="300">
+  <img src="./src/onepitranslator/resources/images/cnshow5.png" alt="img6" width="300">
 
 
 
@@ -64,7 +64,11 @@ An integrated GUI program of offline translation Argos Translate and online tran
 - 4.🖥️ **Complete Installation Package with Language Packs Package _size: ~2G__** [Link](https://github.com/OnePi-1pi/OnePiTranslator/releases/download/V1.0.0/all_add_language_package_windows.exe)   
   Includes all components (except CUDA). The size is very large. Comes with language packs {Simplified Chinese: zh, Traditional Chinese: zt, English: en, French: fr, Spanish: es, German: de, Korean: ko, Japanese: ja, Russian: ru}.
 
+### Google Driver :
+https://drive.google.com/drive/folders/1-Q4dZzKjivbb8uT9F3O7AZCf73TW-_az?usp=drive_link
 
+### MEGA :
+https://mega.nz/folder/2AMEhJZb#RkuqHgzsrhhmFydQljE-iw
 
 ### 2️⃣ PyPI Installation (for Users with Python Already Installed)
 #### just install online translate
@@ -109,12 +113,12 @@ run software  select _Options and Settings_ choose _Install Local Translation La
 Although Argos has been optimized and will automatically use all CPU cores when dealing with large volumes of text, the speed increase is still limited.
 CUDA can significantly speed up offline translation time. Since the author's graphics card is a modified version of the gtx1080, and the driver cannot be updated under Windows, only the CUDA acceleration on Linux has been tested. This is a time statistics chart for different modes.
 
-  <img src="./resources/images/cuda-time.png" alt="CUDA Time Statistics" width="300">
+  <img src="./src/onepitranslator/resources/images/cuda-time.png" alt="CUDA Time Statistics" width="300">
 ### 🌍 Language Settings
 
 After downloading, the program should automatically switch to the language of the system's region. If not, you can manually select:
 
-<img src="./resources/images/cnshow4.png" alt="img3" width="300">
+<img src="./src/onepitranslator/resources/images/cnshow4.png" alt="img3" width="300">
 
 
 
@@ -122,7 +126,7 @@ After downloading, the program should automatically switch to the language of th
 
 Choose the needed translator, it's recommended to test with text translation first. Most translators require an API Key. You can check in 'Options and Settings' for information about free API Keys and application difficulty. Double-click the URL to jump to it.
 
-<img src="./resources/images/enshow2.png" alt="img4" width="300">
+<img src="./src/onepitranslator/resources/images/enshow2.png" alt="img4" width="300">
 
 
 ### 📂 Batch Translation of File/Folder Names
@@ -151,6 +155,6 @@ Supports selecting all files within a single folder (including subfolders), or s
 ## ❓ Unresolved Issues
 When using CUDA to accelerate argostranslate translation, the GPU cannot exert its full capability, seemingly due to an I/O bottleneck. The versions of torch, CUDA, and drivers all match. Attempts to adjust torch parameters, including increasing Batch Size, have not resolved this issue.
 
-<img src="./resources/images/CUDAandNV.jpg" alt="img1" width="300">
+<img src="./src/onepitranslator/resources/images/CUDAandNV.jpg" alt="img1" width="300">
 
 ---

@@ -9,7 +9,7 @@
 
 ![Version](https://img.shields.io/badge/version-1.0.0-blue) ![Build Status](https://img.shields.io/badge/build-passing-brightgreen)
 
-<img src="./resources/images/all.gif" alt="img1" width="400">
+<img src="./src/onepitranslator/resources/images/all.gif" alt="img1" width="400">
 
 # 目录
 
@@ -31,7 +31,7 @@
 
 
   
-  <img src="./resources/images/enshow4.png" alt="img5" width="300">
+  <img src="./src/onepitranslator/resources/images/enshow4.png" alt="img5" width="300">
 
 - 📁 **批量翻译与重命名**  
   支持批量翻译文件名或文件夹名，翻译后可手动更改，也可添加原文件名，然后重命名，重命名后支持撤销操作。
@@ -70,7 +70,7 @@
 123云盘（不限速）
 https://www.123pan.com/s/bS7ETd-1zZ3A.html 提取码:3141
 
-![alt text](./resources/images/123.png)
+![alt text](./src/onepitranslator/resources/images/123.png)
 
 ---
 百度云链接：https://pan.baidu.com/s/1zcyFJZjk8_tyNo0SJdUNBg?pwd=3145 
@@ -78,7 +78,7 @@ https://www.123pan.com/s/bS7ETd-1zZ3A.html 提取码:3141
 
 小程序扫码
 
-![alt text](./resources/images/百度云小程序.png)
+![alt text](./src/onepitranslator/resources/images/百度云小程序.png)
 
 ### 2️⃣ Pypi 安装（推荐已安装 Python 的用户,windows用户要管理员运行pip才能安装到默认目录）
 #### 在线翻译的安装：
@@ -123,27 +123,27 @@ python -m pip install "numpy>=1.0.0,<2.0.0"
 虽然已对argos进行了优化，文本量大时会自动使用全部CPU核心，但是提升速度依然有限。
 CUDA可以显著加速离线翻译时间，由于作者显卡是魔改版1080，windows下更不了驱动，因此只测试了linux下的CUDA加速,这是不同模式的时间统计图。
 
-<img src="./resources/images/cuda-time.png" alt="CUDA 时间统计" width="300">
+<img src="./src/onepitranslator/resources/images/cuda-time.png" alt="CUDA 时间统计" width="300">
 
 
 ### 🌍 语言设置
 
 下载后程序应自动切换到系统所在地区的语言，如果没有，可以手动选择：
 
-<img src="./resources/images/cnshow4.png" alt="img3" width="300">
+<img src="./src/onepitranslator/resources/images/cnshow4.png" alt="img3" width="300">
 
 
 ### 📝 翻译器选择
 
 选择需要的翻译器，建议先通过文本翻译进行测试。大部分翻译器需要 API Key，有关是否有免费 API Key 以及申请难度，可以在《选项及设置》中查看。双击网址即可跳转。
 
-<img src="./resources/images/enshow2.png" alt="img4" width="300">
+<img src="./src/onepitranslator/resources/images/enshow2.png" alt="img4" width="300">
 
 ### 📂 文件/文件夹名批量翻译
 
 支持选择单文件夹内的全部文件（不包括子文件夹），或单独选择几个文件（使用 SHIFT 多选或 CTRL 单选）。翻译后可双击或右键修改，选中项可按 Delete 或右键删除。支持批量重命名，并可撤销修改，退回原文件名。
 
-  <img src="./resources/images/cnshow5.png" alt="img6" width="300">
+  <img src="./src/onepitranslator/resources/images/cnshow5.png" alt="img6" width="300">
 
 ## 🛠️ 示例使用场景
 
@@ -168,6 +168,6 @@ CUDA可以显著加速离线翻译时间，由于作者显卡是魔改版1080，
 ## ❓ 未解决问题
 在使用CUDA加速argostranslate翻译时，GPU不能发挥全部能力，貌似有io瓶颈。torch与CUDA与驱动版本均吻合。尝试调高torch参数，包括增大Batch Size等，均未解决此问题。
 
-<img src="./resources/images/CUDAandNV.jpg" alt="img1" width="300">
+<img src="./src/onepitranslator/resources/images/CUDAandNV.jpg" alt="img1" width="300">
 
 ---
