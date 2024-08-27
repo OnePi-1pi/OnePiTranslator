@@ -73,6 +73,13 @@ An integrated GUI program of offline translation Argos Translate and online tran
 python -m pip install onepitranslator
 ```
 
+### then run :
+
+```bash
+python -m  onepitranslator
+```
+### Note that a shortcut will be created on the desktop after running, just delete it if you don't want it, and it will not be created again.
+
 #### If you need to use offline translation, you can continue to install argostranslate:
 
 ```bash

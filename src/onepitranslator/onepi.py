@@ -13,17 +13,17 @@ import webbrowser
 import subprocess
 import regex as re
 from pathlib import Path
-import  choose_translate
 import ttkbootstrap as ttk
 from ttkbootstrap import font
 from tkinter import filedialog 
 from ttkbootstrap.constants import *
 from multiprocessing import Process,Event
+from onepitranslator import choose_translate
 from PIL import Image,ImageTk,ImageFont,ImageDraw
 from ttkbootstrap.dialogs.dialogs import Messagebox
 from ttkbootstrap.dialogs.dialogs import FontDialog
 from ttkbootstrap.localization import MessageCatalog
-import install_offline_translator_language as inslang
+from onepitranslator import install_offline_translator_language as inslang
 
 
 class TranslationApp:
@@ -39,6 +39,7 @@ class TranslationApp:
         self.root = master
         self.root.bind("<Configure>", master.after(40,self.root.update_idletasks()))  
         root.resizable(True,  True)
+
         root.title(MessageCatalog.translate("One pi File Name Batch Translator"))
         # 右键点击窗口时,使正在选择的treeview对象重置状态
         # root.bind("<Button-3>", lambda event: (root.focus_set(), self.tree.selection_set()))

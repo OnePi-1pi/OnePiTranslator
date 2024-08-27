@@ -1,6 +1,13 @@
 from setuptools import setup, find_packages
+from setuptools.command.install import install
+import sysconfig
 import os
 import sys
+import subprocess
+
+
+
+
 
 def read_readme(filename):
     with open(filename, encoding='utf-8') as f:
@@ -11,12 +18,18 @@ long_description_zh = read_readme('README_zh.md')
 
 def data_files():
     if sys.platform == 'win32':
-        return [('share/onepitranslator', ['scripts/run.exe'])]
+        return [('share/onepitranslator', ['run.exe'])]
     else:
-        return [('share/onepitranslator', ['scripts/run.sh'])]
+        return [('share/onepitranslator', ['run.sh'])]
+
+
+
+
+
+
 
 setup(
-    name='OnePiTranslator',
+    name='onepitranslator',
     version='1.0.0',
     author='One Pi',
     author_email='q_o_ql@163.com',
@@ -37,18 +50,21 @@ setup(
         'deep_translator[ai]',
         'deep_translator[docx]',
         'deep_translator[pdf]',
-    ],
+    ] + (['pywin32'] if sys.platform == 'win32' else []),
+
     extras_require={
         'complete': [
             'argostranslate',
             'spacy',
             'spacy[xx_sent_ud_sm]',
-            # Add other optional dependencies here
         ],
     },
     entry_points={
         'console_scripts': [
-            'onepitranslator=onepitranslator:main',
+            'onepitranslator-create-shortcut = onepitranslator.create_shortcut:create_shortcut',
+        ],
+        'gui_scripts': [
+            'onepitranslator = onepitranslator.__main__:main',
         ],
     },
     classifiers=[
@@ -60,16 +76,18 @@ setup(
         'Programming Language :: Python :: 3.11',
         'Programming Language :: Python :: 3.12',
         'Programming Language :: Python :: 3.13',
-        'Programming Language :: Python :: 3.14',  # 假设你也支持Python 3.14
+        'Programming Language :: Python :: 3.14',  
         'Programming Language :: Python :: 3 :: Only',
         'Operating System :: OS Independent',
     ],
-    python_requires='>=3.9',
+    python_requires='>=3.7',
     package_data={
         'onepitranslator': [
+            'languages/*',
             'resources/images/*',
             'scripts/*',
         ],
     },
     data_files=data_files(),
+    
 )

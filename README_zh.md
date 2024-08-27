@@ -80,11 +80,18 @@ https://www.123pan.com/s/bS7ETd-1zZ3A.html 提取码:3141
 
 ![alt text](./resources/images/百度云小程序.png)
 
-### 2️⃣ Pypi 安装（推荐已安装 Python 的用户）
+### 2️⃣ Pypi 安装（推荐已安装 Python 的用户,windows用户要管理员运行pip才能安装到默认目录）
 #### 在线翻译的安装：
 ```bash
 python -m pip install onepitranslator
 ```
+
+### 然后运行:
+
+```bash
+python -m  onepitranslator
+```
+### 注意运行后会在桌面创建快捷方式,不想要的删除即可,不会再次创建.
 
 #### 如需使用离线翻译，可继续安装argostranslate：
 
