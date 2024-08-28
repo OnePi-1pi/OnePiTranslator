@@ -82,6 +82,11 @@ python -m pip install onepitranslator
 ```bash
 python -m  onepitranslator
 ```
+or simply
+```bash
+onepitranslator
+```
+
 ### Note that a shortcut will be created on the desktop after running, just delete it if you don't want it, and it will not be created again.
 
 #### If you need to use offline translation, you can continue to install argostranslate:
@@ -114,6 +119,7 @@ Although Argos has been optimized and will automatically use all CPU cores when 
 CUDA can significantly speed up offline translation time. Since the author's graphics card is a modified version of the gtx1080, and the driver cannot be updated under Windows, only the CUDA acceleration on Linux has been tested. This is a time statistics chart for different modes.
 
   <img src="./src/onepitranslator/resources/images/cuda-time.png" alt="CUDA Time Statistics" width="300">
+
 ### 🌍 Language Settings
 
 After downloading, the program should automatically switch to the language of the system's region. If not, you can manually select:

@@ -91,6 +91,11 @@ python -m pip install onepitranslator
 ```bash
 python -m  onepitranslator
 ```
+或者只是一句
+```bash
+onepitranslator
+```
+
 ### 注意运行后会在桌面创建快捷方式,不想要的删除即可,不会再次创建.
 
 #### 如需使用离线翻译，可继续安装argostranslate：
