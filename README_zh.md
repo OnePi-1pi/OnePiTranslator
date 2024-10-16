@@ -159,7 +159,7 @@ CUDA可以显著加速离线翻译时间，由于作者显卡是魔改版1080，
 
 ## 🔗 链接
 - **📹 视频**:
-- ***[哔哩哔哩](https://www.bilibili.com/video/BV1mQe5ePEUp/?share_source=copy_web&vd_source=2479572e87b2a5619bdc6332186b5269)***
+- ***[哔哩哔哩](https://www.bilibili.com/video/BV1hvm7YfEsm/)***
 - ***[西瓜视频](https://www.ixigua.com/7403916189837853195)***
 - ***[youtube](https://youtube.com/@onepi-i8x?si=QrX5QF_QR-iaBArL)***
 - ***[tiktok](https://www.tiktok.com/@onepizen)***
@@ -170,9 +170,3 @@ CUDA可以显著加速离线翻译时间，由于作者显卡是魔改版1080，
 - **argos-translate**:https://github.com/nidhaloff/deep-translator
 - **ttkbootstrap**:https://github.com/israel-dryer/ttkbootstrap
 
-## ❓ 未解决问题
-在使用CUDA加速argostranslate翻译时，GPU不能发挥全部能力，貌似有io瓶颈。torch与CUDA与驱动版本均吻合。尝试调高torch参数，包括增大Batch Size等，均未解决此问题。
-
-<img src="./src/onepitranslator/resources/images/CUDAandNV.jpg" alt="img1" width="300">
-
----
