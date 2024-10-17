@@ -160,7 +160,7 @@ CUDA可以显著加速离线翻译时间，由于作者显卡是魔改版1080，
 ## 🔗 链接
 - **📹 视频**:
 - ***[哔哩哔哩](https://www.bilibili.com/video/BV1hvm7YfEsm/)***
-- ***[西瓜视频](https://www.ixigua.com/7403916189837853195)***
+- ***[西瓜视频](https://www.ixigua.com/7425847299806331418***
 - ***[youtube](https://youtube.com/@onepi-i8x?si=QrX5QF_QR-iaBArL)***
 - ***[tiktok](https://www.tiktok.com/@onepizen)***
 
